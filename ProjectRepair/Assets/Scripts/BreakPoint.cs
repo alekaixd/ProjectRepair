@@ -7,10 +7,12 @@ public class BreakPoint : MonoBehaviour
     public bool isActive = false;
     private GameManager gameManager;
     private int repairCount;
+    private CameraShake cameraShake;
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        cameraShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
     }
 
     // Update is called once per frame
@@ -26,10 +28,16 @@ public class BreakPoint : MonoBehaviour
     {
         if (isActive == true) 
         {
+            cameraShake.shakecamera();
+            Debug.Log("repair");
             repairCount++;
-            if(repairCount == 5)
+            // sound effects and particles and maybe shake
+            if(repairCount >= 5)
             {
                 isActive = false;
+                repairCount = 0;
+                
+                // repair sound effects
             }
         }
     }

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: cc35a9dfcfdccba44b86ce327db3e6d0
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Redwater Banker PERSONAL USE
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 2aa1edf24151d53429ca77f43b06d409, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

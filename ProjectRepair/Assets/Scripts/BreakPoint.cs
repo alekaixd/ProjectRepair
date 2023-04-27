@@ -5,6 +5,7 @@ using UnityEngine;
 public class BreakPoint : MonoBehaviour
 {
     public bool isActive = false;
+    public GameObject waterParticle;
     private GameManager gameManager;
     private int repairCount;
     private CameraShake cameraShake;
@@ -21,6 +22,12 @@ public class BreakPoint : MonoBehaviour
         if(isActive == true)
         {
             gameManager.waterToAdd += 0.0005f;
+            waterParticle.SetActive(true);
+        }
+
+        if(isActive == false)
+        {
+            waterParticle.SetActive(false);
         }
     }
 

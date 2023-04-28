@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,13 +13,17 @@ public class GameManager : MonoBehaviour
     public GameObject startMenu;
     public GameObject endMenu;
     public TextMeshProUGUI scoreText;
+    public AudioSource waterAudio;
     public int pipesToBreak = 2;
     public float waterToAdd = 0;
     public int score = 0;
+    public int pipesBroken = 0;
 
     private Transform waterTransform;
     private float waterAdded = 0;
     private bool gameActive = false;
+    private bool isAudioPlaying = false;
+    
     
     
     // Start is called before the first frame update
@@ -41,14 +46,25 @@ public class GameManager : MonoBehaviour
             if (waterAdded >= 10)
             {
                 gameActive = false;
-
+                endMenu.SetActive(true);
+                scoreText.text = "Your Score: " + score;
+                pipesBroken = 0;
                 for (int i = 0; i < breakPoints.Length; i++)
                 {
-                    endMenu.SetActive(true);
                     GameObject pipe = breakPoints[i];
                     pipe.GetComponent<BreakPoint>().isActive = false;
-                    scoreText.text = "Your Score: " + score;
                 }
+            }
+
+            if (pipesBroken >= 1 && isAudioPlaying == false)
+            {
+                waterAudio.Play();
+                isAudioPlaying = true;
+            }
+            else if (pipesBroken <= 0 && isAudioPlaying == true)
+            {
+                waterAudio.Stop();
+                isAudioPlaying = false;
             }
         }
         
@@ -59,8 +75,15 @@ public class GameManager : MonoBehaviour
         // get random pipe and "break" it
         for(int i = 0; i < pipesToBreak; i++)
         {
-            GameObject pipe = breakPoints[Random.Range(0, 16)];
-            pipe.GetComponent<BreakPoint>().isActive = true;
+            GameObject pipe = breakPoints[Random.Range(0, 17)];
+            if (pipe.GetComponent<BreakPoint>().isActive)
+            {
+                i--;
+            }
+            else
+            {
+                pipe.GetComponent<BreakPoint>().isActive = true;
+            }
             Debug.Log(pipe.name);
         }
         //breakPoints[Random.Range(0, 16)].GetComponent<BreakPoint>().isActive = true;

@@ -44,7 +44,7 @@ public class BreakPoint : MonoBehaviour
             {
                 isActive = false;
                 repairCount = 0;
-                
+                gameManager.pipesBroken -= 1;
                 // repair sound effects
             }
         }

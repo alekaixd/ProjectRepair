@@ -38,6 +38,7 @@ public class BreakPoint : MonoBehaviour
             cameraShake.shakecamera();
             Debug.Log("repair");
             repairCount++;
+            gameManager.score += 25;
             // sound effects and particles and maybe shake
             if(repairCount >= 5)
             {

@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     private float waterAdded = 0;
     private bool gameActive = false;
     private bool isAudioPlaying = false;
+    private float waterStartVolume;
     
     
     
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         waterTransform = waterLevel.GetComponent<Transform>();
+        waterStartVolume = waterAudio.volume;
     }
 
     // Update is called once per frame
@@ -59,15 +61,30 @@ public class GameManager : MonoBehaviour
             if (pipesBroken >= 1 && isAudioPlaying == false)
             {
                 waterAudio.Play();
+                waterAudio.volume = waterStartVolume;
                 isAudioPlaying = true;
             }
             else if (pipesBroken <= 0 && isAudioPlaying == true)
             {
-                waterAudio.Stop();
+                FadeOut(waterAudio, 0.4f);
                 isAudioPlaying = false;
             }
         }
         
+    }
+    public static IEnumerator FadeOut(AudioSource audioSource, float FadeTime)
+    {
+        float startVolume = audioSource.volume;
+
+        while (audioSource.volume > 0)
+        {
+            audioSource.volume -= startVolume * Time.deltaTime / FadeTime;
+
+            yield return null;
+        }
+
+        audioSource.Stop();
+        audioSource.volume = startVolume;
     }
 
     private IEnumerator BreakPipes()
@@ -83,6 +100,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 pipe.GetComponent<BreakPoint>().isActive = true;
+                pipesBroken += 1;
             }
             Debug.Log(pipe.name);
         }

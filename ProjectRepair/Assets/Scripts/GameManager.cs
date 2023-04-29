@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] breakPoints;
     public GameObject startMenu;
     public GameObject endMenu;
+    public GameObject UI_cam;
     public TextMeshProUGUI scoreText;
     public AudioSource waterAudio;
     public int pipesToBreak = 2;
@@ -24,8 +25,6 @@ public class GameManager : MonoBehaviour
     private bool gameActive = false;
     private bool isAudioPlaying = false;
     private float waterStartVolume;
-    
-    
     
     // Start is called before the first frame update
     void Start()
@@ -49,6 +48,8 @@ public class GameManager : MonoBehaviour
             {
                 gameActive = false;
                 endMenu.SetActive(true);
+                UI_cam.SetActive(true);
+                waterAudio.Stop();
                 scoreText.text = "Your Score: " + score;
                 pipesBroken = 0;
                 for (int i = 0; i < breakPoints.Length; i++)
@@ -120,6 +121,7 @@ public class GameManager : MonoBehaviour
     {
         gameActive = true;
         startMenu.SetActive(false);
+        UI_cam.SetActive(false);
         StartCoroutine(BreakPipes());
     }
 

@@ -15,6 +15,9 @@ public class BreakPoint : MonoBehaviour
     private CameraShake UI_CameraShake;
     private AudioSource repairSound;
     private AudioSource completedRepairSound;
+    private Texture2D cursorArrow;
+    private Texture2D cursorArrowActive;
+    private GameObject cursorManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +26,9 @@ public class BreakPoint : MonoBehaviour
         UI_CameraShake = GameObject.Find("UI_cam").GetComponent<CameraShake>();
         repairSound = GameObject.Find("Repair Audio").GetComponent<AudioSource>();
         completedRepairSound = GameObject.Find("Repair Completed Audio").GetComponent<AudioSource>();
+        cursorManager = GameObject.Find("CursorManager");
+        cursorArrow = cursorManager.GetComponent<CursorScript>().cursorArrow;
+        cursorArrowActive = cursorManager.GetComponent<CursorScript>().cursorArrowActive;
     }
 
     // Update is called once per frame
@@ -81,5 +87,15 @@ public class BreakPoint : MonoBehaviour
                 // repair sound effects
             }
         }
+    }
+
+    private void OnMouseEnter()
+    {
+        Cursor.SetCursor(cursorArrowActive, Vector2.zero, CursorMode.ForceSoftware);
+    }
+
+    private void OnMouseExit()
+    {
+        Cursor.SetCursor(cursorArrow, Vector2.zero, CursorMode.ForceSoftware);
     }
 }
